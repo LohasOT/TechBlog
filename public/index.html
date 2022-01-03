@@ -37,7 +37,7 @@
       <p class="lead">This is a simple blog app that is definitely NOT a facebook clone. Why would you think that?
         Pretty weird.</p>
       <hr class="my-4">
-      <p class="lead">Welcome Back <span id="username"></span>!</p>
+      <p class="lead">Welcome Back<span id="username"></span>!</p>
     </div>
     <div class="row">
       <form>
@@ -94,7 +94,7 @@
             let postElem = document.createElement('div')
             postElem.innerHTML = `
             <h3 class="goToPost" data-postid="${post.id}"> ${post.title} </h3>
-            <h5> posted by ${post.User.username} </h5>
+            <h5> posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)} </h5>
             <p> ${post.body} </p>
             `
             document.getElementById('posts').prepend(postElem)
@@ -114,6 +114,11 @@
       localStorage.removeItem('token')
       location = '/login.html'
     }
+  
+  document.getElementById("logout").addEventListener('click', event => {
+    event.preventDefault()
+    logoutUser()
+  })
 
   </script>
 </body>
