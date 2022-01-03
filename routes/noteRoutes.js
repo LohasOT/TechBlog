@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { Post, User, Note } = require('../models')
 const passport = require('passport')
 
-// GET all posts
+// GET all comments
 router.get('/notes', passport.authenticate('jwt'), async function (req, res) {
   const notes = await Note.findAll({ include: [User, Post] })
   res.json(notes)
@@ -10,7 +10,7 @@ router.get('/notes', passport.authenticate('jwt'), async function (req, res) {
 
 
 
-// POST one post
+// POST one comment
 router.post('/notes', passport.authenticate('jwt'), async function (req, res) {
   const note = await Note.create({
     body: req.body.body,
@@ -20,10 +20,10 @@ router.post('/notes', passport.authenticate('jwt'), async function (req, res) {
   res.json(note)
 })
 
-// DELETE one post
-// router.delete('/posts/:id', passport.authenticate('jwt'), async function (req, res) {
-//   await Post.destroy({ where: { id: req.params.id } })
-//   res.sendStatus(200)
-// })
+// DELETE one comment
+router.delete('/notes/:id', passport.authenticate('jwt'), async function (req, res) {
+  await Note.destroy({ where: { id: req.params.id } })
+  res.sendStatus(200)
+})
 
 module.exports = router
