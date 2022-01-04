@@ -52,7 +52,10 @@
         <button id="post" type="submit" class="btn btn-primary">Create Post</button>
       </form>
     </div>
+    <br>
+    <div class="container bg-light">
     <div id="posts" class="row"></div>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -93,9 +96,13 @@
           posts.forEach(post => {
             let postElem = document.createElement('div')
             postElem.innerHTML = `
+            <br>
             <h3 class="goToPost" data-postid="${post.id}"> ${post.title} </h3>
-            <h5> posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)} </h5>
+            <br>
+            <h5> Posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)} </h5>
+            <br>
             <p> ${post.body} </p>
+            <hr>
             `
             document.getElementById('posts').prepend(postElem)
           })
