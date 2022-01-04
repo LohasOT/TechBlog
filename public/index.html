@@ -79,6 +79,20 @@
       })
       }
 
+      function createComment() {
+        let newComment = {
+          body: document.getElementById('commentBody').value
+        }
+        axios.post('/api/notes', newComment, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+          .then(res => {
+            console.log(res)
+          })
+      }      
+
       document.getElementById("post").addEventListener('click', event => {
         event.preventDefault()
         createPost()
@@ -102,9 +116,17 @@
             <h5> Posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)} </h5>
             <br>
             <p> ${post.body} </p>
+            <textarea class="form-control" name="body" id="commentBody" cols="15" rows="1"></textarea>
+            </div>
+            <br>
+            <button id="postComment" type="submit" class="btn btn-primary">Comment</button>
             <hr>
             `
             document.getElementById('posts').prepend(postElem)
+            document.getElementById("postComment").addEventListener('click', event => {
+              event.preventDefault()
+              createComment()
+            })
           })
           
         })
