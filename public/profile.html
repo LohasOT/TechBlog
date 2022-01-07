@@ -54,52 +54,36 @@
         location = '/login.html'
       }
 
-      async function getProfile() {
-        try {
-          const { data: user } = await axios.get('/api/users/profile', {
+    function getUserPosts() {
+        axios.get('/api/users/profile', {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
           })
-          return user
+            .then(res => {
 
-        } catch (err) {
-          location = '/login.html'
-        }
-      }
-
-      async function renderPost({ title, body }) {
-        const postElem = document.createElement('div')
-        postElem.classList.add("col-sm-4")
-        postElem.innerHTML = `
+              console.log(res.data)
+              let items = res.data.posts
+              let userInfo = res.data
+              items.forEach(item => {
+                let itemElem = document.createElement('div')
+                itemElem.innerHTML = `
 
             <div class="card" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title">${title}</h5>
-              <p class="card-text">${body}</p>
+              <h5 class="card-title data-postid="${item.id}"> ${item.title}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Posted by ${userInfo.username} at ${item.createdAt.slice(0, -14)}</h6>
+              <p class="card-text">${item.body}</p>
+              <a href="/post.html" class="btn btn-dark btn-lg goToPost" data-postid="${item.id}" tabindex="-1" role="button">Go To Comment</a>
             </div>
             </div>
             <br>
             `
-        document.getElementById('posts').prepend(postElem)
-      }
-
-      async function renderPosts() {
-        const { posts } = await getProfile()
-
-        posts.forEach(post => renderPost(post))
-      }
-
-      async function renderUsername() {
-        const username = localStorage.getItem('username')
-
-        document.getElementById('username').textContent = username
-      }
-
-      document.getElementById('logout').addEventListener('click', logoutUser)
-
-      renderPosts()
-      renderUsername()
+        document.getElementById('posts').prepend(itemElem)
+      })
+    })
+  }
+  getUserPosts()
     </script>
 </body>
 
