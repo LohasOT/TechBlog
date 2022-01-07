@@ -67,6 +67,7 @@
               let userInfo = res.data
               items.forEach(item => {
                 let itemElem = document.createElement('div')
+                itemElem.classList.add("col-sm-4")
                 itemElem.innerHTML = `
 
             <div class="card" style="width: 18rem;">
@@ -84,6 +85,25 @@
     })
   }
   getUserPosts()
+
+  document.addEventListener('click', event => {
+    if (event.target.classList.contains('goToPost')) {
+      console.log('ping')
+        localStorage.setItem('postId', event.target.dataset.postid)
+        location = '/post.html'
+            }
+          })
+
+
+      async function logoutUser() {
+        localStorage.removeItem('token')
+        location = '/login.html'
+      }
+
+      document.getElementById("logout").addEventListener('click', event => {
+        event.preventDefault()
+        logoutUser()
+      })
     </script>
 </body>
 
