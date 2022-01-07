@@ -109,24 +109,23 @@
           let posts = res.data
           posts.forEach(post => {
             let postElem = document.createElement('div')
+            postElem.classList.add("col-sm-4")
             postElem.innerHTML = `
-            <br>
-            <h3 class="goToPost" data-postid="${post.id}"> ${post.title} </h3>
-            <br>
-            <h5> Posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)} </h5>
-            <br>
-            <p> ${post.body} </p>
-            <textarea class="form-control" name="body" id="commentBody" cols="15" rows="1"></textarea>
+
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title data-postid="${post.id}">${post.title}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Posted by ${post.User.username} at ${post.User.createdAt.slice(0, -14)}</h6>
+              <p class="card-text">${post.body}</p>
+              <hr>
+              <a href="/post.html" class="btn btn-dark btn-lg goToPost" data-postid="${post.id}" tabindex="-1" role="button">Go To Comment</a>
             </div>
-            <br>
-            <button id="postComment" type="submit" class="btn btn-primary">Comment</button>
-            <hr>
+          </div>
+          </div>
+          <br>
             `
             document.getElementById('posts').prepend(postElem)
-            document.getElementById("postComment").addEventListener('click', event => {
-              event.preventDefault()
-              createComment()
-            })
+
           })
           
         })
