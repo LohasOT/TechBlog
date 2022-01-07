@@ -79,23 +79,10 @@
       })
       }
 
-      function createComment() {
-        let newComment = {
-          body: document.getElementById('commentBody').value
-        }
-        axios.post('/api/notes', newComment, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        })
-          .then(res => {
-            console.log(res)
-          })
-      }      
-
       document.getElementById("post").addEventListener('click', event => {
         event.preventDefault()
         createPost()
+        location.reload()
       })
 
       axios.get('/api/posts', {
