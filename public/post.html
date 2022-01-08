@@ -121,11 +121,29 @@
         notes.forEach(note => {
           let noteElem = document.createElement('div')
           noteElem.innerHTML = `
-              <h5>${note.User.username} Commented At ${note.createdAt.slice(0, -14)}</h5>
+              <h5>${note.User.username} commented at ${note.createdAt.slice(0, -14)}</h5>
               <h6>${note.body}</h6>
+              <button id="deleteComment" class="btn btn-dark btn-sm data-postid="${note.id}">Delete Comment</button>
               <hr>
               `
           document.getElementById('comments').prepend(noteElem)
+          document.getElementById("deleteComment").addEventListener('click', event => {
+            event.preventDefault();
+            let headers = {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+
+            axios.delete(`/api/notes/${note.id}`, {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            })
+              .then(res => {
+                location = '/post.html'
+              }).catch(err => {
+                console.log(err);
+              })
+          })
         })
       })
   }
