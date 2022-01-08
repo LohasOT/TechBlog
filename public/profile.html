@@ -37,7 +37,7 @@
       <p class="lead">This is a simple blog app that is definitely NOT a facebook clone. Why would you think that?
         Pretty weird.</p>
       <hr class="my-4">
-      <p class="lead"><span id="username"></span>'s posts!</p>
+      <p class="lead">Here Are Your Posts!</p>
     </div>
     <div class="container bg-light">
     <div id="posts" class="row"></div>
@@ -75,12 +75,31 @@
               <h5 class="card-title data-postid="${item.id}"> ${item.title}</h5>
               <h6 class="card-subtitle mb-2 text-muted">Posted by ${userInfo.username} at ${item.createdAt.slice(0, -14)}</h6>
               <p class="card-text">${item.body}</p>
-              <a href="/post.html" class="btn btn-dark btn-lg goToPost" data-postid="${item.id}" tabindex="-1" role="button">Go To Comment</a>
+              <a href="/post.html" class="btn btn-dark btn-md goToPost" data-postid="${item.id}" tabindex="-1" role="button">Go To Comment</a>
+              <button id="deletePost" class="btn btn-dark btn-md data-postid="${item.id}">Delete Post</button>
             </div>
             </div>
             <br>
             `
+
         document.getElementById('posts').prepend(itemElem)
+              document.getElementById("deletePost").addEventListener('click', event => {
+                  event.preventDefault();
+                  let headers = {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                  }
+
+                  axios.delete(`/api/posts/${item.id}`, {
+                    headers: {
+                      'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                  })
+                    .then(res => {
+                      location = '/profile.html'
+                    }).catch(err => {
+                      console.log(err);
+                    })
+                })
       })
     })
   }
@@ -104,7 +123,12 @@
         event.preventDefault()
         logoutUser()
       })
+
     </script>
+
+
+    </script>
+
 </body>
 
 </html>
