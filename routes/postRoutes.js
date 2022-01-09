@@ -13,8 +13,6 @@ router.get('/posts/:id', passport.authenticate('jwt'), async function (req, res)
   res.json(posts)
 })
 
-
-
 // POST one post
 router.post('/posts', passport.authenticate('jwt'), async function (req, res) {
   const post = await Post.create({
@@ -22,6 +20,12 @@ router.post('/posts', passport.authenticate('jwt'), async function (req, res) {
     title: req.body.title,
     uid: req.user.id
   })
+  res.json(post)
+})
+
+// Edit one post
+router.put('/posts/:id', passport.authenticate('jwt'), async function (req, res) {
+  const post = await Post.update( req.body, { where: { id: req.params.id } })
   res.json(post)
 })
 

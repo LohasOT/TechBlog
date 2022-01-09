@@ -76,6 +76,7 @@
               <p class="card-text">${item.body}</p>
               <a href="/post.html" class="btn btn-dark btn-md goToPost" data-postid="${item.id}" tabindex="-1" role="button">Go To Comment</a>
               <button id="deletePost" class="btn btn-dark btn-md data-postid="${item.id}">Delete Post</button>
+              <button id="editPost" class="btn btn-dark btn-md goToEdit" data-postid="${item.id}">Edit Post</button>
             </div>
             </div>
             <br>
@@ -112,6 +113,13 @@
             }
           })
 
+    document.addEventListener('click', event => {
+      if (event.target.classList.contains('goToEdit')) {
+        console.log('ping')
+        localStorage.setItem('postId', event.target.dataset.postid)
+        location = '/editPost.html'
+      }
+    })
 
       async function logoutUser() {
         localStorage.removeItem('token')
@@ -122,9 +130,6 @@
         event.preventDefault()
         logoutUser()
       })
-
-    </script>
-
 
     </script>
 
