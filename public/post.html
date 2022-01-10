@@ -150,12 +150,14 @@
   getAllNotes()
 
 
-        // axios.delete('/api/notes/uid', {
-        //     headers: {
-        //       'Authorization': `Bearer ${localStorage.getItem('token')}`
-        //     }
-        //   })
-        //     .then(res => {
+      function timedOut() {
+        window.setTimeout(function () {
+          localStorage.removeItem('token')
+          // Move to a new location or you can do something else
+          location = "/login.html";
+        }, 300000);
+      }
+      timedOut()
   </script>
 </body>
 </html>
